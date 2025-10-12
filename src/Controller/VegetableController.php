@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\DTO\CreateVegetableDtoFactory;
 
 #[Route('/vegetables')]
 class VegetableController extends AbstractController
@@ -47,8 +48,8 @@ class VegetableController extends AbstractController
     #[Route('', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        $vegetable = $this->service->create($data);
+        $dto = CreateVegetableDtoFactory::fromRequest($request);
+        $vegetable = $this->service->create($dto);
 
         return $this->json([
                                'message' => 'Vegetable created',
