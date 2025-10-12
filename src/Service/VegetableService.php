@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Vegetable;
 use Doctrine\ORM\EntityManagerInterface;
+use App\DTO\CreateVegetableDto;
 
 class VegetableService
 {
@@ -21,13 +22,13 @@ class VegetableService
         return $this->em->getRepository(Vegetable::class)->find($id);
     }
 
-    public function create(array $data): Vegetable
+    public function create(CreateVegetableDto $dto): Vegetable
     {
         $vegetable = new Vegetable();
-        $vegetable->setName($data['name'] ?? '');
-        $vegetable->setType($data['type'] ?? '');
-        $vegetable->setSeason($data['season'] ?? '');
-        $vegetable->setDescription($data['description'] ?? null);
+        $vegetable->setName($dto->name);
+        $vegetable->setType($dto->type);
+        $vegetable->setSeason($dto->season);
+        $vegetable->setDescription($dto->description);
 
         $this->em->persist($vegetable);
         $this->em->flush();

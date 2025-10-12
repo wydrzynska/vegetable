@@ -9,12 +9,17 @@ class VegetableControllerTest extends WebTestCase
     public function testCreateVegetable(): void
     {
         $client = static::createClient();
-        $client->request('POST', '/vegetables', [], [], ['CONTENT_TYPE' => 'application/json'], json_encode([
-                                                                                                                'name' => 'Testowa Marchew',
-                                                                                                                'type' => 'korzeniowe',
-                                                                                                                'season' => 'jesień',
-                                                                                                                'description' => 'Opis testowy',
-                                                                                                            ]));
+        $client->request('POST',
+         '/vegetables',
+          [],
+           [],
+            ['CONTENT_TYPE' => 'application/json'],
+             json_encode([
+                        'name' => 'Testowa Marchew',
+                        'type' => 'korzeniowe',
+                        'season' => 'jesień',
+                        'description' => 'Opis testowy',
+                    ]));
 
         $this->assertResponseStatusCodeSame(201);
         $this->assertJson($client->getResponse()->getContent());
